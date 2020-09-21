@@ -43,7 +43,8 @@
                     hint="At least 8 characters"
                     counter
                     @click:append="show1 = !show1"
-                  ></v-text-field>
+                  >
+                  </v-text-field>
 
                   <v-text-field
                     prepend-icon="mdi-lock"
@@ -52,8 +53,7 @@
                     :rules="[comparePasswords]"
                     :type="show2 ? 'text' : 'passwordConfirm'"
                     name="input-10-1"
-                    label="确认密码
-"
+                    label="确认密码"
                     hint="At least 8 characters"
                     counter
                     @click:append="show2 = !show2"
