@@ -10,16 +10,32 @@
             <form @submit.prevent="userSignIn">
               <v-layout column>
                 <v-flex>
-                  <v-alert type="error" dismissible v-model="alert">{{ error }}</v-alert>
+                  <v-text-field
+                    name="email"
+                    label="Email"
+                    id="email"
+                    type="email"
+                    v-model="email"
+                    required
+                  ></v-text-field>
                 </v-flex>
                 <v-flex>
-                  <v-text-field name="email" label="Email" id="email" type="email" v-model="email" required></v-text-field>
-                </v-flex>
-                <v-flex>
-                  <v-text-field name="password" label="Password" id="password" type="password" v-model="password" required></v-text-field>
+                  <v-text-field
+                    name="password"
+                    label="Password"
+                    id="password"
+                    type="password"
+                    v-model="password"
+                    required
+                  ></v-text-field>
                 </v-flex>
                 <v-flex class="text-xs-center" mt-5>
                   <v-btn color="primary" type="submit">Sign In</v-btn>
+                </v-flex>
+                <v-flex>
+                  <v-alert type="error" dismissible v-model="alert">
+                    {{ error }}
+                  </v-alert>
                 </v-flex>
               </v-layout>
             </form>
@@ -32,36 +48,39 @@
 
 <script>
 export default {
-  name: 'Signin',
+  name: "Signin",
   data: () => ({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
     alert: false
   }),
   computed: {
     error() {
-      return this.$store.state.error
+      return this.$store.state.error;
     },
     loading() {
-      return this.$store.state.loading
+      return this.$store.state.loading;
     }
   },
   methods: {
     userSignIn() {
-      this.$store.dispatch('userSignIn', { email: this.email, password: this.password })
+      this.$store.dispatch("userSignIn", {
+        email: this.email,
+        password: this.password
+      });
     }
   },
   watch: {
     error(value) {
       if (value) {
-        this.alert = true
+        this.alert = true;
       }
     },
     alert(value) {
       if (!value) {
-        this.$store.commit('setError', null)
+        this.$store.commit("setError", null);
       }
     }
   }
-}
+};
 </script>

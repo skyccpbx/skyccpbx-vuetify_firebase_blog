@@ -18,21 +18,78 @@
                 </v-tooltip>
               </v-toolbar>
               <v-card-text>
-                <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="userSignUp">
-                  <v-text-field prepend-icon="mdi-email" v-model="email" :rules="emailRules" label="邮 箱" required></v-text-field>
+                <v-form
+                  ref="form"
+                  v-model="valid"
+                  lazy-validation
+                  @submit.prevent="userSignUp"
+                >
+                  <v-text-field
+                    prepend-icon="mdi-email"
+                    v-model="email"
+                    :rules="emailRules"
+                    label="邮 箱"
+                    required
+                  ></v-text-field>
 
-                  <v-text-field prepend-icon="mdi-lock" v-model="password" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :rules="[rules.required, rules.min]" :type="show1 ? 'text' : 'password'" name="input-10-1" label="密 码" hint="At least 8 characters" counter @click:append="show1 = !show1"></v-text-field>
+                  <v-text-field
+                    prepend-icon="mdi-lock"
+                    v-model="password"
+                    :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                    :rules="[rules.required, rules.min]"
+                    :type="show1 ? 'text' : 'password'"
+                    name="input-10-1"
+                    label="密 码"
+                    hint="At least 8 characters"
+                    counter
+                    @click:append="show1 = !show1"
+                  ></v-text-field>
 
-                  <v-text-field prepend-icon="mdi-lock" v-model="passwordConfirm" :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'" :rules="[comparePasswords]" :type="show2 ? 'text' : 'passwordConfirm'" name="input-10-1" label="确认密码
-" hint="At least 8 characters" counter @click:append="show2 = !show2"></v-text-field>
+                  <v-text-field
+                    prepend-icon="mdi-lock"
+                    v-model="passwordConfirm"
+                    :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+                    :rules="[comparePasswords]"
+                    :type="show2 ? 'text' : 'passwordConfirm'"
+                    name="input-10-1"
+                    label="确认密码
+"
+                    hint="At least 8 characters"
+                    counter
+                    @click:append="show2 = !show2"
+                  ></v-text-field>
 
-                  <v-checkbox v-model="checkbox" :rules="[v => !!v || '请同意用户协议！']" label="我已阅读并同意网站的使用条件及隐私声明。" required></v-checkbox>
+                  <v-checkbox
+                    v-model="checkbox"
+                    :rules="[v => !!v || '请同意用户协议！']"
+                    label="我已阅读并同意网站的使用条件及隐私声明。"
+                    required
+                  ></v-checkbox>
                   <v-card-actions class="d-flex justify-center">
-                    <v-btn large :loading="loading" :disabled="loading" color="success" class="mr-4" @click="validate" type="submit">确定</v-btn>
-                    <v-btn large color="error" class="mr-4" @click="reset">重置</v-btn>
+                    <v-btn
+                      large
+                      :loading="loading"
+                      :disabled="loading"
+                      color="success"
+                      class="mr-4"
+                      @click="validate"
+                      type="submit"
+                      >确定</v-btn
+                    >
+                    <v-btn large color="error" class="mr-4" @click="reset"
+                      >重置</v-btn
+                    >
                   </v-card-actions>
                   <v-flex class="my-2">
-                    <v-alert icon="mdi-alert" prominent text type="error" dismissible v-model="alert">{{ error }}</v-alert>
+                    <v-alert
+                      icon="mdi-alert"
+                      prominent
+                      text
+                      type="error"
+                      dismissible
+                      v-model="alert"
+                      >{{ error }}</v-alert
+                    >
                   </v-flex>
                 </v-form>
               </v-card-text>
@@ -44,11 +101,10 @@
   </v-app>
 </template>
 <script>
-
 export default {
   name: 'Signup',
   props: {
-    source: String,
+    source: String
   },
   data: () => ({
     valid: true,
@@ -56,12 +112,12 @@ export default {
     name: '',
     nameRules: [
       v => !!v || '用户名不能为空！',
-      v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+      v => (v && v.length <= 10) || 'Name must be less than 10 characters'
     ],
     email: '',
     emailRules: [
       v => !!v || '邮箱不能为空！',
-      v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+      v => /.+@.+\..+/.test(v) || 'E-mail must be valid'
     ],
     checkbox: false,
     show1: false,
@@ -71,8 +127,8 @@ export default {
     rules: {
       required: value => !!value || '请输入密码！.',
       min: v => v.length >= 8 || '最少设置8位密码',
-      emailMatch: () => ('The email and password you entered don\'t match'),
-    },
+      emailMatch: () => "The email and password you entered don't match"
+    }
   }),
   computed: {
     comparePasswords() {
@@ -99,7 +155,10 @@ export default {
       if (this.comparePasswords !== true) {
         return
       }
-      this.$store.dispatch('userSignUp', { email: this.email, password: this.password })
+      this.$store.dispatch('userSignUp', {
+        email: this.email,
+        password: this.password
+      })
     }
   },
   watch: {
@@ -117,5 +176,4 @@ export default {
 }
 </script>
 
-<style>
-</style>
+<style></style>

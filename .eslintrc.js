@@ -5,19 +5,14 @@ module.exports = {
     node: true
   },
 
-  extends: ['plugin:vue/essential', '@vue/standard'],
+  extends: ["prettier"],
 
   parserOptions: {
-    parser: 'babel-eslint'
+    parser: "babel-eslint"
   },
 
   rules: {
-    'no-console': 'off',
-    'no-debugger': 'off'
-  },
-
-  'extends': [
-    'plugin:vue/essential',
-    '@vue/standard'
-  ]
-}
+    "no-console": "off",
+    "no-debugger": "off"
+  }
+};
