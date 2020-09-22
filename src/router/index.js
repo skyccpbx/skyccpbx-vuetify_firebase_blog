@@ -1,31 +1,59 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import Vue from 'vue'
+import firebase from 'firebase/app'
+import 'firebase/auth'
+import VueRouter from 'vue-router'
+import Home from '@/views/Home'
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
 const routes = [
   {
-    path: "/",
-    name: "Home",
-    component: Home
+    path: '/',
+    component: () => import('../views/login/Signin'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
-    path: "/signup",
-    name: "Signup",
-    component: () => import("../views/login/Signup")
+    path: '/home',
+    name: 'Home',
+    component: Home,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
-    path: "/signin",
-    name: "Signin",
-    component: () => import("../views/login/Signin")
+    path: '/signup',
+    name: 'Signup',
+    component: () => import('../views/login/Signup')
+  },
+  {
+    path: '/signin',
+    name: 'Signin',
+    component: () => import('../views/login/Signin')
+  },
+
+  {
+    path: '/notfound',
+    name: 'NotFound',
+    component: () => import('../views/NotFound')
   }
-];
+]
 
 const router = new VueRouter({
-  mode: "history",
+  mode: 'history',
   base: process.env.BASE_URL,
   routes
-});
+})
 
-export default router;
+router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
+  const isAuthenticated = firebase.auth().currentUser
+  if (requiresAuth && !isAuthenticated) {
+    next('/signin')
+  } else {
+    next()
+  }
+})
+
+export default router

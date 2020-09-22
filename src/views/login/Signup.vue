@@ -87,9 +87,12 @@
                       text
                       type="error"
                       dismissible
-                      v-model="alert"
+                      v-model="errAlert"
                       >{{ error }}</v-alert
                     >
+                    <v-alert v-model="okalert" type="success" class="my-3">
+                      注册成功！
+                    </v-alert>
                   </v-flex>
                 </v-form>
               </v-card-text>
@@ -108,7 +111,8 @@ export default {
   },
   data: () => ({
     valid: true,
-    alert: false,
+    errAlert: false,
+    //okalert: false,
     name: '',
     nameRules: [
       v => !!v || '用户名不能为空！',
@@ -125,7 +129,7 @@ export default {
     password: '',
     passwordConfirm: '',
     rules: {
-      required: value => !!value || '请输入密码！.',
+      required: value => !!value || '请输入密码！',
       min: v => v.length >= 8 || '最少设置8位密码',
       emailMatch: () => "The email and password you entered don't match"
     }
@@ -139,6 +143,9 @@ export default {
     },
     loading() {
       return this.$store.state.loading
+    },
+    okalert() {
+      return this.$store.state.okalert
     }
   },
   methods: {
@@ -164,10 +171,10 @@ export default {
   watch: {
     error(value) {
       if (value) {
-        this.alert = true
+        this.errAlert = true
       }
     },
-    alert(value) {
+    errAlert(value) {
       if (!value) {
         this.$store.commit('setError', null)
       }
